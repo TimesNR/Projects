@@ -1,0 +1,202 @@
+---
+title: "Evidencia 2"
+author: "Alan Urie Merlan Esquivel"
+date: "`06/05/2022`"
+output: html_document
+---
+##Parte 1
+
+
+**PRESENTACION **
+https://docs.google.com/presentation/d/1l0YJrtAPaV2qdWO_ebhWTpX-EpduJH-6/edit?usp=sharing&ouid=102547863662586450575&rtpof=true&sd=true
+
+**VIDEO**
+https://www.youtube.com/watch?v=Vj0MbMA9Gp4
+
+**Las preguntas contienen lo mismo que la presentación y el video.**
+¿Cuáles son los virus “similares” a SARS-CoV-2 en el mundo? Obtén tus referencias de PUBMED.
+
+ncontrado en el articulo de Alexande Thomas  en Virus del MDPI, articulo disponible en Pub Med Central(https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8402765/)
+El coronavirus cuenta con muchos parientes “similares” en cierta medida
+Este proviene de cornaviridae, que a su vez se divide coronavirinae que a su vez se divide en :
+- Alphacoronavirus
+- Betacoronavirus(Aqusí se encuentra el SARS-CoV2)
+- Gammacoronavirus
+- Etc.
+
+Virus similares al coronavirus y que también generan pandemias humanas. Según Pedro Souza en un articulo de International Journal of Biological Macromolecules, encontrado en pub med central(https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7921731/)
+- SARS-Cov1
+- Mers-Cov
+Por otra, parte los virus de la familia coronavirus que han efectado humanos pero que no cuentan con sucesos pandémicos y, en general, cuentan con menos similitudes son los siguientes
+- Los que al igual que los tres anteriores, permanecen en Betacoronavirus: HCoV-0C43, HCoV-KKU1
+- Los que no: Hcov-NL63, CoV-229E
+Encontrado en el articulo de Alexande Thomas  en Virus del MDPI, articulo disponible en Pub Med Central(https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8402765/)
+
+
+¿Cuáles son los coronavirus reportados en otras especies que pueden ser cercanos al genoma de SARS-CoV-2? Incluye de qué especies son y menciona las referencias de los artículos consultados en PUBMED.
+
+
+Basado en una publicación de Devika Singh, encontrable en pub med(https://pubmed.ncbi.nlm.nih.gov/33864026/).
+Al igual que en el caso anterior hay una gran cantidad de variedad de coronavirus en especies diferentes a humnas. Algunas cercanas al Sars-Cov2 son
+- RatG13 en murciélagos
+- Guangdong 2019 en pangolines
+
+Algunos otros ejemplos de coronavirus, no necesariamente similares al SARS-Cov-2.
+- PC4-13 en civeta común de las palmeras
+- Rs3367 en murciélagos
+- Etc.
+
+
+En relación con la situación actual reflexiona, ¿qué propondrías que se deba hacer durante la contingencia del SARS-CoV-2 en comunidades de bajos recursos? Si tu vivieras en una situación de escasos recursos, ¿qué harías? Justifica tu respuesta.
+
+En vista de que el panorama, según la ONU(2020), es de un incremento de la pobreza, desigualdad y una tendencia a una peor calidad de vida, considero que lo primero para evitar empeorar más la situación es invertir en programas de ayuda para esta población, facilitando la sanitización y brindado apoyos económicos . 
+Por otra parte, en lo personal  si me encontrará en una situación tan difícil, una donde incluso comprar un cubrebocas implica un gasto importante, intentaría economizar lo más posible el gasto de esté e intentar usarlo lo más que se pueda, pero priorizando el sustento económica para poder sobrevivir.
+
+
+Referencias
+
+- COVID, hambre, pobreza y desigualdad: la combinación mortal que. (2021, 11 octubre). Noticias ONU. Recuperado 6 de mayo de 2022, de https://news.un.org/es/story/2020/07/1477571
+
+- Singh, D. (2021, 16 abril). On the origin and evolution of SARS-CoV-2. Pubmed. Recuperado 6 de mayo de 2022, de https://pubmed.ncbi.nlm.nih.gov/33864026/
+
+- Souza, P. (2021, 15 mayo). The human pandemic coronaviruses on the show: The spike glycoprotein as the main actor in the coronaviruses play. PubMed Central. Recuperado 6 de mayo de 2022, de https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7921731/
+
+- Thomas Sampson, A. (2021, 13 agosto). Coronavirus Pseudotypes for All Circulating Human Coronaviruses for Quantification of Cross-Neutralizing Antibody Responses. PubMed Central. Recuperado 6 de mayo de 2022, de https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8402765/
+
+
+##Parte 2
+**1. Analizar las secuencias de SARS-CoV-2 reportadas en los 20 países con más casos reportados. Y puedes tratar de responder a la pregunta: ¿Son muy diferentes las variantes entre cada país? ¿Es diferente el SARS-CoV-2 entre las diferentes poblaciones: Asiática, Hispana, Europea o Africana?**
+```{r}
+
+library("seqinr")
+library("datasets")
+library("ggplot2")
+library("Biostrings")
+library("ape")
+library("phangorn")
+library("ggtree")
+library("DECIPHER")
+library("viridis")
+library("ade4")
+library("ggmsa")
+
+Alemania <- read.fasta("ALEMANIA.fasta")
+Argentina <-read.fasta("ARGENTINA.fasta")
+Australia <-read.fasta("AUSTRALIA.fasta")
+Brasil <- read.fasta("BRASIL.fasta")
+Colombia <-read.fasta("COLOMBIA.fasta")
+CoreaDelSur <-read.fasta("COREADELSUR.fasta")
+Espana <-read.fasta("ESPANA.fasta")
+Francia <-read.fasta("FRANCIA.fasta")
+India <-read.fasta("INDIA.fasta")
+Indonesia <-read.fasta("INDONESIA.fasta")
+Iran <-read.fasta("IRAN.fasta")
+Italia <-read.fasta("ITALIA.fasta")
+Japon <-read.fasta("JAPON.fasta")
+PaisesBajos <-read.fasta("PAISESBAJOS.fasta")
+Polonia <-read.fasta("POLONIA.fasta")
+ReinoUnido <-read.fasta("REINOUNIDO.fasta")
+Rusia <-read.fasta("RUSIA.fasta")
+Turquia <-read.fasta("TURQUIA.fasta")
+Usa <-read.fasta("USA.fasta")
+Vietnam <-read.fasta("VIETNAM.fasta")
+
+a <- c(Alemania, Argentina, Australia, Brasil, Colombia, CoreaDelSur, Espana, Francia, India, Indonesia, Iran, Italia, Japon, PaisesBajos, Polonia, ReinoUnido, Rusia, Turquia, Usa, Vietnam)
+nombres <- c("Alemania", "Argentina", "Australia", "Brasil", "Colombia", "CoreaDelSur", "Espana", "Francia", "India", "Indonesia", "Iran", "Italia", "Japon", "PaisesBajos", "Polonia", "ReinoUnido", "Rusia", "Turquia", "Usa", "Vietnam")
+```
+**2. Calcula la longitud de las secuencias que incluyas**
+```{r}
+for (i in 1:length(a)){
+  print(nombres[i])
+  print(length(a[[i]]))
+}
+```
+**3. Crea una sola gráfica donde se comparen el número de bases de ADN que componen todas las variantes del virus.**
+```{r}
+i <- c()
+alan <- c()
+
+for (n in 1:length(a)){
+  m <- (count(a[[n]], 1))
+  print(m)
+    for (j in 1:4) {
+    i <- c(i,m[[j]])
+    
+    }
+  alan <- c(alan,i)
+  i <- c()
+}
+
+df2<-data.frame(Variantes=c(rep(c("Alemania"), 4), rep(c("Argentina"), 4), rep(c("Australia"), 4), rep(c("Brasil"), 4), rep(c("Colombia"), 4), rep(c("CoreaDelSur"), 4), rep(c("Espana"), 4), rep(c("Francia"), 4), rep(c("India"), 4), rep(c("Indonesia"), 4), rep(c("Iran"), 4), rep(c("Italia"), 4), rep(c("Japon"), 4), rep(c("PaisesBajos"), 4), rep(c("Polonia"), 4), rep(c("ReinoUnido"), 4), rep(c("Rusia"), 4), rep(c("Turquia"), 4), rep(c("Usa"), 4), rep(c("Vietnam"), 4))
+,Nucleotidos=rep(c("Adenina", "Timina", "Citosina", "Guanina"), 5),Frecuencia=alan)
+
+p1 <- ggplot(df2, aes(Nucleotidos,Frecuencia,fill=Variantes)) + 
+  geom_bar(stat = "identity", position = "dodge", color = "black")
+  labs(title = "Nucleótidos en SARS-CoV-2 detectado en 20 países")  +
+  theme(legend.position = "bottom")
+  
+p1 + theme_linedraw()
+```
+**4. Agrega un análisis jerárquico global obtenido de las secuencias que se seleccionaron para estudiar.**
+```{r}
+write.dna(a,  
+          file ="virus_secuencias.fasta", 
+          format = "fasta", 
+          append = FALSE, 
+          nbcol = 6, 
+          colsep = " ", 
+          colw = 10)
+
+virus_secuen_no_alin <- readDNAStringSet("virus_secuencias.fasta", format = "fasta")
+
+virus_secuen_no_alin
+
+virus_secuen_no_alin <- OrientNucleotides(virus_secuen_no_alin)
+
+virus_secuen_alin <- AlignSeqs(virus_secuen_no_alin)
+
+BrowseSeqs(virus_secuen_alin, highlight=0)
+
+writeXStringSet(virus_secuen_alin, file="virus_secuen_alin.fasta")
+
+virus_alin <- read.alignment("virus_secuen_alin.fasta", format = "fasta")
+
+matriz_distancia <- dist.alignment(virus_alin, matrix = "similarity")
+
+virus_arbol <- nj(matriz_distancia) 
+class(virus_arbol) 
+
+virus_arbol <- ladderize(virus_arbol)
+
+plot(virus_arbol, cex = 0.6)
+title("Coronavirus de distintos países")
+```
+
+**5o.Agrega una interpretación escrita de tus gráficas y tus conclusiones según el caso de estudio que seleccionaste. No olvides sustentar tus argumentos con las lecturas que realizaste.**
+En la primera gráfica, se muestra la cantidad de nucleótidos por cada país, en esta se observa como los niveles de adenina, citosina, guanina y timina en cada variante por país se mantienen prácticamente iguales. Por tanto, las secuencias son muy parecidas entre países. De manera que, las diferencias entre síntomas y contagiosidad dadas entre todas las variantes es dada por esa pequeña diferencia. 
+
+
+En la segunda gráfica, se pueden observar varias cosas. Primero, en la gráfica se observa que España, Francia, Italia, Alemania y Suecia cuentan con una distancia entre estos en el árbol filogenético casi nula. Si se relaciona esto con la cercanía geográfica entre los elementos del grupo, entonces se observa que la propagación de una variante es más sencilla entre que la distancia terrestre entre países disminuye. Cabe mencionar que como en el contexto geopolítico los países cercanos tienden a relacionarse más, es más fácil la interacción entre personas y por tanto la propagación de variantes similares entre países lo es más. Además, en este caso particular, esto se incrementa; ya que la mayoría de los países mencionados pertenecen a la Unión Europea, la cual brinda facilidades para la migración entre países, facilitando así el contagio. 
+
+Cabe mencionar que, lo anterior tambien es observable en: Iran y Turquia; así como en India y Rusia.
+
+
+Por otra parte, se observa lo contrario con Australia, la variante de esta en la gráfica es la más alejada al inicio del árbol. De manera que se observa, como la distancia entre países conlleva que las variantes similares presentes en Europa no predominen de la misma manera.
+
+Otra cosa que se llega a observar en la gráfica es que países con lejanía cuenten con variantes similares. Tal es el caso de Japón y Argentina, los cuales, pese a su distancia geográfica entre ellos, cuentan con ramas muy cercanas en el árbol. Esto se podría atribuir a varias razones sin embargo, el caso más probable es que la variante que se escogió de alguno de los países no corresponda a una similar a la predominante y provenga de un ligera interacción entre países, de manera que sea simplemente un comparación puntual que no demuestra nada en específico.
+
+Cabe destacar, que el ultimo caso mencionado es el más común entre los paíes, por ejemplo pasa algo similar con USA,Japon y Sur COrea; o entre Colombia y Polonia. 
+
+```{r}
+citation("seqinr")
+citation("datasets")
+citation("ggplot2")
+citation("Biostrings")
+citation("ape")
+citation("ggtree")
+citation("DECIPHER")
+citation("viridis")
+citation("phangorn")
+citation("ade4")
+citation("ggmsa")
+```

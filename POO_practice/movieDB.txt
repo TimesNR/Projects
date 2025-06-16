@@ -1,0 +1,5 @@
+1,Lord of the rings,200,Misterio,3
+2,Peli 2,200,Misterio,4
+-1,SAO,Misterio
+*Episodio,1,4
+*Episodio2,2,2

@@ -56,7 +56,7 @@ Output:
 
 +-------------+
 
-'''sql
+```sql
 select product_id from Products where low_fats = 'Y' and recyclable  = 'Y'
-'''
+```
 Explanation: Only products 1 and 3 are both low fat and recyclable.

@@ -12,49 +12,20 @@ Example 1:
 Input: 
 Products table:
 
+| product\_id | low\_fats | recyclable |
+| ----------- | --------- | ---------- |
+| 0           | Y         | N          |
+| 1           | Y         | Y          |
+| 2           | N         | Y          |
+| 3           | Y         | Y          |
+| 4           | N         | N          |
 
-+-------------+----------+------------+
-
-
-| product_id  | low_fats | recyclable |
-
-
-+-------------+----------+------------+
-
-
-| 0           | Y        | N          |
-
-
-| 1           | Y        | Y          |
-
-
-| 2           | N        | Y          |
-
-
-| 3           | Y        | Y          |
-
-
-| 4           | N        | N          |
-
-
-+-------------+----------+------------+
 Output: 
-+-------------+
-
-
-| product_id  |
-
-
-+-------------+
-
-
+| product\_id |
+| ----------- |
 | 1           |
-
-
 | 3           |
 
-
-+-------------+
 
 ```sql
 select product_id from Products where low_fats = 'Y' and recyclable  = 'Y'

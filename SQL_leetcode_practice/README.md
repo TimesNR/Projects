@@ -28,9 +28,9 @@ Tweet 1 has length = 11. It is a valid tweet.
 Tweet 2 has length = 33. It is an invalid tweet.
 
 
-´´´sql
+```sql
 SELECT tweet_id FROM Tweets  WHERE LENGTH(content) >15#
-´´´
+```
 
 # ARTICLE VIEWS 
 Write a solution to find all the authors that viewed at least one of their own articles.

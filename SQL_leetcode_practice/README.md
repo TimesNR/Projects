@@ -1,3 +1,41 @@
+# ARTICLE VIEWS 
+Write a solution to find all the authors that viewed at least one of their own articles.
+
+Return the result table sorted by id in ascending order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Views table:
++------------+-----------+-----------+------------+
+| article_id | author_id | viewer_id | view_date  |
++------------+-----------+-----------+------------+
+| 1          | 3         | 5         | 2019-08-01 |
+| 1          | 3         | 6         | 2019-08-02 |
+| 2          | 7         | 7         | 2019-08-01 |
+| 2          | 7         | 6         | 2019-08-02 |
+| 4          | 7         | 1         | 2019-07-22 |
+| 3          | 4         | 4         | 2019-07-21 |
+| 3          | 4         | 4         | 2019-07-21 |
++------------+-----------+-----------+------------+
+Output: 
++------+
+| id   |
++------+
+| 4    |
+| 7    |
++------+
+
+```sql
+SELECT DISTINCT author_id AS id FROM Views WHERE author_id = viewer_id ORDER BY id
+```
+**Por defecto es acendente y el distinc siempre es previo a una columna**
+
+
 # 1757 LOW FATS AND RECYCLABLE
 Write a solution to find the ids of products that are both low fat and recyclable.
 

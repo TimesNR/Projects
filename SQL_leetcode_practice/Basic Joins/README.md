@@ -50,6 +50,40 @@ WHERE Transactions.transaction_id  IS NULL
 GROUP BY Visits.customer_id
 ```
 
+**Explanation**
+Hacemos el left join de visita y eso pues solo pueda darme más valores que los de la tabla izquierda. 
+Los **JOIN NO SON OPERACIONES EN CONJUNTO**, funcionan similar pero no son. Tipo es como decidir desde donde inicia y se pega una combinatoria.
+Tipo aquí si solo haces el join da:
+
+
++-------------+
+| customer_id |
++-------------+
+| 23          |
+| 9           |
+| 30          |
+| 54 
+| 54
+| 54
+| 96          |
+| 54          |
+| 54          |
++-------------+
+Se agregar por que como estoy pegando por id de visita, y el cliente 54 hizo tres transacciones esa visita pues se pone tres veces.
+Por ejemplo el cliente 30 no visito ni una vez pero como estoy pegando por ese id se queda.
+
+Ahora por que esto(osea donde no haya transacciones)
+```sql
+WHERE Transactions.transaction_id  IS NULL 
+```
+Y no esto 
+
+```sql
+WHERE Transactions.visit_id  NOT IN  (Transactions.visit_id)
+```
+
+**Por que el select digamos que solo hace un filtro visual, la tabla es la generador por el JOIN y esta tiene NULLS y cuando le pregunta a sql algo tipo¿Esta 1 dentro de (Null)?
+pues es decir que hay algo dentro de nada y vale madres**
 # 1068 Product Sales Analysis 1
 
 Write a solution to report the product_name, year, and price for each sale_id in the Sales table.

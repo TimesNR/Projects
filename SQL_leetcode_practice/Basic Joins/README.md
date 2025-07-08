@@ -1,3 +1,61 @@
+# 197 Rising Temperature
+Write a solution to find all dates' id with higher temperatures compared to its previous dates (yesterday).
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Weather table:
++----+------------+-------------+
+| id | recordDate | temperature |
++----+------------+-------------+
+| 1  | 2015-01-01 | 10          |
+| 2  | 2015-01-02 | 25          |
+| 3  | 2015-01-03 | 20          |
+| 4  | 2015-01-04 | 30          |
++----+------------+-------------+
+Output: 
++----+
+| id |
++----+
+| 2  |
+| 4  |
++----+
+
+
+```sql
+SELECT id
+FROM
+(SELECT id, temperature,LAG(temperature) 
+OVER(ORDER BY recordDate) as retraso
+FROM Weather) tarantino
+WHERE temperature > retraso
+```
+
+Aquí pues no puedo editar la tabla tipo
+```sql
+ALTER TABLE Weather ADD COLUMN retraso int;
+```
+ni mi combiene editarlo para eso pues un **subquerry**
+
+```sql
+(SELECT id, temperature,LAG(temperature) 
+OVER(ORDER BY recordDate) as retraso
+FROM Weather) tarantino
+```
+Hace una tabla temporal que llamé tarantino con la temperature y el retraso
+Donde el retraso se hace con la siguiente sintaxis
+
+```sql
+LAG(columna, offset, valor_por_defecto) OVER (PARTITION BY ... ORDER BY ...)
+```
+
+
 # 1581 CUSTOMERS WHO VISITED BUT DID NOT MAKE ANY TRANSACTIONS.
 
 Write a solution to find the IDs of the users who visited without making any transactions and the number of times they made these types of visits.

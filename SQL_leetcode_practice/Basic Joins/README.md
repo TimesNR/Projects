@@ -55,6 +55,8 @@ Donde el retraso se hace con la siguiente sintaxis
 ```sql
 LAG(columna, offset, valor_por_defecto) OVER (PARTITION BY ... ORDER BY ...)
 ```
+Aqui datediff se hace para asegurar que sea **solo respecto al valor anterior**
+
 
 
 # 1581 CUSTOMERS WHO VISITED BUT DID NOT MAKE ANY TRANSACTIONS.

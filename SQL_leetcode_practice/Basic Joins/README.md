@@ -62,6 +62,25 @@ Pues aqui redonde coun ROUND(col/val,no de decimales) y el promedio con AVG. Agr
 Hago el join en los mismos procesos de las mismas maquinas pero con el inicio y el final. Así solo me da start y end en una misma fila
 Pero **es inefciente**
 
+**Sol de LEETCODE**
+
+```sql
+SELECT a.machine_id, 
+       ROUND(AVG(b.timestamp - a.timestamp), 3) AS processing_time
+FROM Activity a, 
+     Activity b
+WHERE 
+    a.machine_id = b.machine_id
+AND 
+    a.process_id = b.process_id
+AND 
+    a.activity_type = 'start'
+AND 
+    b.activity_type = 'end'
+GROUP BY machine_id
+```
+
+Osea la lógica esta bien, lo que hace más efcieinte so solución es que no ahce la combinatoria, solo se queda con los anteriores.
 
 # 197 Rising Temperature
 Write a solution to find all dates' id with higher temperatures compared to its previous dates (yesterday).

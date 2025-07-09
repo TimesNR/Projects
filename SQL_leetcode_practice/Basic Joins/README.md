@@ -57,6 +57,26 @@ LAG(columna, offset, valor_por_defecto) OVER (PARTITION BY ... ORDER BY ...)
 ```
 Aqui datediff se hace para asegurar que sea **solo respecto al valor anterior**
 
+**CON JOINS**
+Basicamente haces un self join, para hacer un producto cartesiano.
+Recordemos que el producto cartesiano entre de conjuntos es el conjunto de todas las posibles combinaciones entre elementos.
+Osea seria producto cartesiano por fecha, entonces es como digamos tengo 1 junio,2 junio, 3 junio.
+Tipo para combino con si mismo (1 junio, 1 junio), (1 junio, 2 junio), (1 junio, 3 junio)
+Pero solo pones un condicional para que te quedes solo con el par que tenga una diferencia de 1 día
+Es decir:
+```sql
+
+SELECT 
+    w1.id
+FROM 
+    Weather w1
+JOIN 
+    Weather w2
+ON 
+    DATEDIFF(w1.recordDate, w2.recordDate) = 1
+WHERE 
+    w1.temperature > w2.temperature;
+```
 
 
 # 1581 CUSTOMERS WHO VISITED BUT DID NOT MAKE ANY TRANSACTIONS.

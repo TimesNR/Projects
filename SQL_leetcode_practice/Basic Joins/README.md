@@ -31,10 +31,11 @@ Output:
 ```sql
 SELECT id
 FROM
-(SELECT id, temperature,LAG(temperature) 
-OVER(ORDER BY recordDate) as retraso
+(SELECT id, temperature,
+LAG(temperature) OVER(ORDER BY recordDate) as retraso,
+DATEDIFF(recordDate,LAG(recordDate) OVER(ORDER BY recordDate)) AS deltaDias
 FROM Weather) tarantino
-WHERE temperature > retraso
+WHERE temperature > retraso AND deltaDias =1
 ```
 
 Aquí pues no puedo editar la tabla tipo

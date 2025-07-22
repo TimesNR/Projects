@@ -87,7 +87,18 @@ ExamenesTotales.student_id, ExamenesTotales.subject_name
 ```
 Al inicio pense que se podía en un solo join, chance sí. Pero no encontre la forma
 Aqui a destacar tres puntos. De inicio el problema da que chance un alumno no hizo todos los examenes o que de plano no hizo ninguno.
-Entonces tienes que hacer una tablas de los examenes que debió haber hecho. Para eso haces un **cross join entre las materias y estudiantes **
+Entonces tienes que hacer una tablas de los examenes que debió haber hecho. Para eso haces un **cross join entre las materias y estudiantes**.
+Ya de ahí por los datos que te pide tienes que hacer un join entre examinations y students.
+Aquí otro tema, que fue uno de los motivos por los que me tarde **COUNT(tabla1) != COUNT(TABLA2)**. Osea que si requieres hacer un count mientras haces un join. El conteo
+resultante va a ser de la respectiva tabla puesta y luego unido al join.
+Para evitar que el count me da muchos resultados uso:
+```sql
+ExamenesTotales.student_id = Tabla.student_id AND 
+ExamenesTotales.subject_name  = Tabla.subject_name
+```
+Pues si solo lo hago con la id pues en examinations se repite la id por cada examen.Ahora le agrego el subject para que no se repita.
+En el caso de que no este una materia, pues se queda por el tipo de join.
+
 
 # 577 Employee Bonus
 

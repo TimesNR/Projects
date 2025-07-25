@@ -1,4 +1,5 @@
 # 580 Manager with at least 5 Direct Reports
+
 Write a solution to find managers with at least five direct reports.
 
 Return the result table in any order.

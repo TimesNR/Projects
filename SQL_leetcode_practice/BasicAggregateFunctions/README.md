@@ -82,7 +82,9 @@ Register.contest_id
 ORDER BY
 percentage  DESC, Register.contest_id ASC
 ```
-
+*NOTAS*
+Aqui para usar el total lo saque y luego hice u full outer join para agregarlo a todo, ocmo es un solo dato el total al hacer el aouter join es como si agregaras una columna
+Igual puedes agregarla, pero eso modificaria la base de datos
 # 1075 Project Employees I
 +-------------+---------+
 | Column Name | Type    |

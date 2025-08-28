@@ -1,3 +1,69 @@
+# 1193. Monthly Transactions I
+Table: Transactions
+
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| id            | int     |
+| country       | varchar |
+| state         | enum    |
+| amount        | int     |
+| trans_date    | date    |
++---------------+---------+
+id is the primary key of this table.
+The table has information about incoming transactions.
+The state column is an enum of type ["approved", "declined"].
+ 
+
+Write an SQL query to find for each month and country, the number of transactions and their total amount, the number of approved transactions and their total amount.
+
+Return the result table in any order.
+
+The query result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Transactions table:
++------+---------+----------+--------+------------+
+| id   | country | state    | amount | trans_date |
++------+---------+----------+--------+------------+
+| 121  | US      | approved | 1000   | 2018-12-18 |
+| 122  | US      | declined | 2000   | 2018-12-19 |
+| 123  | US      | approved | 2000   | 2019-01-01 |
+| 124  | DE      | approved | 2000   | 2019-01-07 |
++------+---------+----------+--------+------------+
+Output: 
++----------+---------+-------------+----------------+--------------------+-----------------------+
+| month    | country | trans_count | approved_count | trans_total_amount | approved_total_amount |
++----------+---------+-------------+----------------+--------------------+-----------------------+
+| 2018-12  | US      | 2           | 1              | 3000               | 1000                  |
+| 2019-01  | US      | 1           | 1              | 2000               | 2000                  |
+| 2019-01  | DE      | 1           | 1              | 2000               | 2000                  |
++----------+---------+-------------+----------------+--------------------+-----------------------+
+ 
+*Notas*
+Pues bueno este es algo mas largo el codiog es: 
+```sql
+SELECT 
+DATE_FORMAT(trans_date,"%Y-%m")  AS month,
+country,
+COUNT(id) as trans_count,
+COUNT(CASE WHEN state = "approved" THEN id ELSE NULL END) AS approved_count,
+SUM(amount) as trans_total_amount,
+SUM(CASE WHEN state = "approved" THEN amount ELSE 0 END) AS approved_total_amount
+FROM Transactions
+GROUP BY month,country
+```
+Basicamente para cambiar el formato de fecha se usa *DATE_FORMAT*, igual existe *FORMAT* pero eso es para otros formatos. Te permite cambiar todo la parte del mes aqui hay varias variaciones y se pone con % antecedido. Tipo %c es mes pero de 1-12, %m es de 01-12 y %M es el mes pero en string. Para este caso por que igual depende de la version de sql que tengas, pa ver más info de eso esta este link: https://www.w3schools.com/sql/func_mysql_date_format.asp
+Luego un comando muy util que no conocia es
+```sql
+CASE WHEN state = "approved" THEN id ELSE NULL END
+```
+QUE ES BUENO SIMILAR A UN NP.WHERE(),pero con ocupas las funciones de agregaciones por que si no las columnas no van a concordar en caso de que tengas diferentes filtros.
+
 # 1633 Percentage of users acepted.
 +-------------+---------+
 | Column Name | Type    |

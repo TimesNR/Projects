@@ -83,3 +83,13 @@ Prices.product_id = UnitsSold.product_id
 AND UnitsSold.purchase_date BETWEEN Prices.start_date AND Prices.end_date 
 GROUP BY Prices.product_id
 ```
+
+*Notas*
+Aquí bues basicamente hay dos puntos importantes a mencionar:
+ -Basicamente depende la fecha el precio, y por tanto el promedio que te sale es diferente para asegurarte que el JOIN no te de demas por una fecha diferente usas lo siguiente:
+
+```sql
+UnitsSold.purchase_date BETWEEN Prices.start_date AND Prices.end_date 
+```
+ - Luego por asunto de sustituir NULL de una columna sin tener que hacer un JOIN con la tabla updateado con valors substituidos pues hay como 3 comandos que a veces funcionan y aveces no dependiendo de donde trabajes: ISNULL(),IFNULL(), COALESCE(). Basicamente el COALESCE() da el primver valor no null de una columna o de un set de columnas
+

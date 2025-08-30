@@ -1,3 +1,21 @@
+```sql
+# Write your MySQL query statement below
+SELECT 
+-- Delivery.customer_id,
+IFNULL(ROUND(AVG(CASE WHEN Delivery.order_date = Delivery.customer_pref_delivery_date THEN 1 ELSE 0 END)*100,2),0) as immediate_percentage
+-- Primera_orden.first_order AS 1fecha
+FROM
+Delivery 
+RIGHT JOIN
+#Primera Fecha
+(SELECT customer_id,MIN(order_date) as first_order
+FROM Delivery
+GROUP BY customer_id
+) Primera_orden
+#Condicion del JOIN
+ON
+Delivery.customer_id = Primera_orden.customer_id AND Delivery.order_date = Primera_orden.first_order
+```
 # 1934 Confirmation rate
 
 

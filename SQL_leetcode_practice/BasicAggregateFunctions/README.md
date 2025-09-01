@@ -1,3 +1,109 @@
+# 550. Game Play Analysis IV
+Write a solution to report the fraction of players that logged in again on the day after the day they first logged in, rounded to 2 decimal places. In other words, you need to determine the number of players who logged in on the day immediately following their initial login, and divide it by the number of total players.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Activity table:
++-----------+-----------+------------+--------------+
+| player_id | device_id | event_date | games_played |
++-----------+-----------+------------+--------------+
+| 1         | 2         | 2016-03-01 | 5            |
+| 1         | 2         | 2016-03-02 | 6            |
+| 2         | 3         | 2017-06-25 | 1            |
+| 3         | 1         | 2016-03-02 | 0            |
+| 3         | 4         | 2018-07-03 | 5            |
++-----------+-----------+------------+--------------+
+Output: 
++-----------+
+| fraction  |
++-----------+
+| 0.33      |
++-----------+
+
+*Psuedo-algoritomo*
+Basicamente sigo lo siguiente
+- Encontrar el primer logged-in
+- Ver si se loggeo dos dias seguidos pero solo del primer logged in, y contar la cantidad de jugadores que cumplen eso
+- Contar el total, para sacar el porcentaje de jugadadores que se logearon dos dias seguidos en su primer logged in
+Mi primer aproach fue con la funcion de ventaja LAG(), pero como no puedes usarla en la where clause ocupas muchas subquerries, es posible pero no lo recomiendo.
+Luego hice lo siguiente:
+```sql
+SELECT ROUND(IFNULL(Streak.day_after/COUNT(DISTINCT Activity.player_id),0),2) AS fraction
+FROM 
+Activity
+LEFT JOIN
+
+(SELECT A1.player_id,A1.event_date,COUNT(A2.player_id) as day_after
+FROM
+Activity A1
+LEFT JOIN
+(SELECT player_id, MIN(event_date) as first_logged_in
+FROM Activity
+GROUP BY player_id) A2
+ON A1.player_id = A2.player_id
+AND A1.event_date = DATE_ADD(first_logged_in, INTERVAL 1 DAY)) Streak
+
+ON Activity.player_id = Streak.player_id
+AND Activity.event_date = Streak.event_date
+```
+Que pues basicamente es una jerarquia de tres subquerries
+Esta parte obtiene el primer logged in de cada jugadores
+```sql
+SELECT player_id, MIN(event_date) as first_logged_in
+FROM Activity
+GROUP BY player_id
+```
+Luego pego la tabla anterior con mi tabal original de tal forma que solo se peguen cuando se cumple A1.event_date = DATE_ADD(first_logged_in, INTERVAL 1 DAY), que pues bueno es que se conecto al dia siguiente del first_logged_in
+```sql
+
+SELECT A1.player_id,A1.event_date,COUNT(A2.player_id) as day_after
+FROM
+Activity A1
+LEFT JOIN
+(SELECT player_id, MIN(event_date) as first_logged_in
+FROM Activity
+GROUP BY player_id) A2
+ON A1.player_id = A2.player_id
+AND A1.event_date = DATE_ADD(first_logged_in, INTERVAL 1 DAY)
+```
+Ya pues nada mas cuentas el total de jugadores y sacas el fraction.
+*LEETCODE SOLUTION*
+Ahora en comparacion la funcion de leetcode recoemndada es muy bonita, en complejidad es similar pero es mil veces más entendible:
+```sql
+SELECT
+  ROUND(COUNT(DISTINCT player_id) / (SELECT COUNT(DISTINCT player_id) FROM Activity), 2) AS fraction
+FROM
+  Activity
+WHERE
+  (player_id, DATE_SUB(event_date, INTERVAL 1 DAY))
+  IN (
+    SELECT player_id, MIN(event_date) AS first_login FROM Activity GROUP BY player_id
+  )
+```
+Aqui lo interesante es el WHERE. De inicio no sabia que podias usar subquerries en el where jajaja
+Con lo siguiente, igual saca el primer logged in por jugador
+```sql
+SELECT player_id, MIN(event_date) AS first_login FROM Activity GROUP BY player_id
+```
+Aqui usan muy bien el operador IN, primero saca cual es el día anterior de todos los datos.
+Pero solo se queda los que su dia anterior esten dentro de la lista de primeros dias(que bueno chance da problemas cuando dos jugadores comparten el primer dia o algo asi)
+
+```sql
+  (player_id, DATE_SUB(event_date, INTERVAL 1 DAY))
+  IN (
+    SELECT player_id, MIN(event_date) AS first_login FROM Activity GROUP BY player_id
+  )
+```
+Igual usa una subquerry dentro del select, que pues da el total y simplifica miucho el codigo. IGUAL no sabia que podias usarlas dentro de SELECT
+
+
+# ME FALTA UNO
+
 # 1193. Monthly Transactions I
 Table: Transactions
 

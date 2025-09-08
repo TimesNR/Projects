@@ -1,3 +1,54 @@
+# 1045  Customers Who Bought All Products
+Write a solution to report the customer ids from the Customer table that bought all the products in the Product table.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Customer table:
++-------------+-------------+
+| customer_id | product_key |
++-------------+-------------+
+| 1           | 5           |
+| 2           | 6           |
+| 3           | 5           |
+| 3           | 6           |
+| 1           | 6           |
++-------------+-------------+
+Product table:
++-------------+
+| product_key |
++-------------+
+| 5           |
+| 6           |
++-------------+
+Output: 
++-------------+
+| customer_id |
++-------------+
+| 1           |
+| 3           |
++-------------+
+Explanation: 
+The customers who bought all the products (5 and 6) are customers with IDs 1 and 3.
+
+*Solución*
+```sql
+SELECT Customer.customer_id
+FROM Customer, Product
+GROUP BY customer_id
+HAVING COUNT(DISTINCT Product.product_key
+) = COUNT(DISTINCT Customer.product_key)
+
+```
+Aqui quise hacerlo con having, basicamente la idea es que el distinct count de products pues el maximo que tienen que llegar para que hayan comprado todos los productos.
+Uso having(where post group by) para filtrar quienes cumplen eso
+
 # 596 Class with at least 5 students
 Write a solution to find all the classes that have at least five students.
 

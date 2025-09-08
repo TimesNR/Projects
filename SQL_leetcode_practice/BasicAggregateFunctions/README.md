@@ -1,3 +1,63 @@
+# Product sales analysis III
+Write a solution to find all sales that occurred in the first year each product was sold.
+
+For each product_id, identify the earliest year it appears in the Sales table.
+
+Return all sales entries for that product in that year.
+
+Return a table with the following columns: product_id, first_year, quantity, and price.
+Return the result in any order.
+
+ 
+
+Example 1:
+
+Input: 
+Sales table:
++---------+------------+------+----------+-------+
+| sale_id | product_id | year | quantity | price |
++---------+------------+------+----------+-------+ 
+| 1       | 100        | 2008 | 10       | 5000  |
+| 2       | 100        | 2009 | 12       | 5000  |
+| 7       | 200        | 2011 | 15       | 9000  |
++---------+------------+------+----------+-------+
+
+
+*Mi solucion*
+Pues bueno, auiq tuve problemas pero no se excatmente por que. Creo mi primera solución, tenía elementos repetidos o algo. La verdad me parecía correcta. Pero salió con esta de aquí
+```sql
+SELECT product_id,first_year,quantity,price
+FROM
+SALES
+RIGHT JOIN
+(SELECT min(year) as first_year, product_id as p
+FROM Sales
+GROUP BY product_id) Tabla
+ON 
+product_id = p AND year = first_year
+```
+Mi otra solución que igual veía bien era la siguiente
+```sql
+SELECT Sales.product_id,first_year, quantity,price
+FROM
+Sales
+LEFT JOIN
+(SELECT product_id,min(year) as first_year FROM Sales GROUP BY product_id) First_year
+ON First_year.product_id = Sales.product_id
+WHERE Sales.year in
+(SELECT min(year) as first_year FROM Sales GROUP BY product_id) 
+```
+Basicamente la segunda, devuelve todas las ventas correspondientes de los primeros años, la segunda devuelve todas las ventas en los primeros años relacionadas a ese producto. Segun yo la descripción quedaba más con la segunda pero bueno.
+
+Output: 
++------------+------------+----------+-------+
+| product_id | first_year | quantity | price |
++------------+------------+----------+-------+ 
+| 100        | 2008       | 10       | 5000  |
+| 200        | 2011       | 15       | 9000  |
++------------+------------+----------+-------+
+
+
 # 550. Game Play Analysis IV
 Write a solution to report the fraction of players that logged in again on the day after the day they first logged in, rounded to 2 decimal places. In other words, you need to determine the number of players who logged in on the day immediately following their initial login, and divide it by the number of total players.
 

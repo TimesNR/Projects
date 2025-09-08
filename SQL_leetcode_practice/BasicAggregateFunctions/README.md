@@ -1,3 +1,60 @@
+# 596 Class with at least 5 students
+Write a solution to find all the classes that have at least five students.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Courses table:
++---------+----------+
+| student | class    |
++---------+----------+
+| A       | Math     |
+| B       | English  |
+| C       | Math     |
+| D       | Biology  |
+| E       | Math     |
+| F       | Computer |
+| G       | Math     |
+| H       | Math     |
+| I       | Math     |
++---------+----------+
+Output: 
++---------+
+| class   |
++---------+
+| Math    |
++---------+
+Explanation: 
+- Math has 6 students, so we include it.
+- English has 1 student, so we do not include it.
+- Biology has 1 student, so we do not include it.
+- Computer has 1 student, so we do not include it.
+*Solucion*
+```sql
+# Write your MySQL query statement below
+SELECT class
+FROM
+(SELECT class,COUNT(DISTINCT student) as conteo
+FROM Courses
+GROUP BY class) tabla
+WHERE conteo >= 5
+```
+Pero en la web esta está solución tan bonita:
+
+```sql
+select class 
+from Courses
+group by class
+having count(*)>=5;
+```
+Me falta usar de merjo manera el having
+
 # Product sales analysis III
 Write a solution to find all sales that occurred in the first year each product was sold.
 

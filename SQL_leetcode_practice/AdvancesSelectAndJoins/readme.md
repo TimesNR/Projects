@@ -1,3 +1,42 @@
+# 610 Triangle Judgement
+Report for every three line segments whether they can form a triangle.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Triangle table:
++----+----+----+
+| x  | y  | z  |
++----+----+----+
+| 13 | 15 | 30 |
+| 10 | 20 | 15 |
++----+----+----+
+Output: 
++----+----+----+----------+
+| x  | y  | z  | triangle |
++----+----+----+----------+
+| 13 | 15 | 30 | No       |
+| 10 | 20 | 15 | Yes      |
++----+----+----+----------+
+
+
+*Solution*
+```sql
+SELECT
+x,y,z,
+(CASE WHEN (x < y+z AND y <x+z AND z<x+y) THEN "Yes" Else "No" END) AS triangle
+#podria lit probar los tres casos, pero quiero hacerlo mas elegante
+FROM Triangle
+```
+Aqui lo complicado es ver que es un triangulo, que pues bueno dicen: cuando el lado mas largo es menor que la suma de los otros dos. Que es cierto para
+la hipotenusa, pero no pasa en todos los espacios y la definición me parece muy mala. Pero bueno es la solución pese a que sea matematicamente incorrecta.
+
 # 1789 Primary department for each employee
 
 (employee_id, department_id) is the primary key (combination of columns with unique values) for this table.

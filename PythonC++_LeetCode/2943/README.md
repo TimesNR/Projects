@@ -5,11 +5,11 @@ You can remove some of the bars in hBars from horizontal bars and some of the ba
 Return an integer denoting the maximum area of a square-shaped hole in the grid, after removing some bars (possibly none).
 **IDEA**
 Como sabes que cualquiera dos lineas se intersectan, 
-. Primero  ordenar los arrays con las lineas quitables.
-. Ves si las lineas quitables son seguidas en cada dimension, y te quedas con la longitud resultante
-. Te quedas con el de maxima longitud
-. ya que tiene la max longitud horizontal y vertical. Pues como se intersectan sabes que se va a formar un cuadrado no importa dónde.
-. Como es cuadrado, te quedas con el lado mas bajo y lo elevas al cuadrado
+- Primero  ordenar los arrays con las lineas quitables.
+- Ves si las lineas quitables son seguidas en cada dimension, y te quedas con la longitud resultante
+- Te quedas con el de maxima longitud
+- ya que tiene la max longitud horizontal y vertical. Pues como se intersectan sabes que se va a formar un cuadrado no importa dónde.
+- Como es cuadrado, te quedas con el lado mas bajo y lo elevas al cuadrado
 
 **MI SOLUCION**
 ```python

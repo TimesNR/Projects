@@ -59,6 +59,13 @@ class Solution(object):
 
 **SOLUCION EN C+++**
 
+Ahora de alguna forma mi version de c++ del codigo es estupidamente ineficiente JAJAJ. Como notas para recordar el lenguaje
+- :: es un operador que indica a que namespace esta la funcion
+- vector<int>& hBars el **&** indica que es una referencia a otro objeto, osea un puntero. Entonces cosas como sizeof funcionan con el puntero y con con lo que apunta
+- Luego ese vector es estatico, si quiero uno dinámico como los de python, ocupo **#include <vector>**
+- La forma que use sort es **in-place** i.e. modifica al objeto al que apunta, no al puntero o a una copia(como en python). Por eso no es necesario guardarlo
+- La potencia se hace con pow()
+
 ```cpp
 #include <algorithm>
 #include <iostream>

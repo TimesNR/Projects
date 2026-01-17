@@ -64,3 +64,27 @@ class Solution:
         else: 
             return max(aux) **2 % (10**9+7)
 ```
+
+```cpp
+class Solution {
+public:
+    int maximizeSquareArea(int m, int n, vector<int>& hFences, vector<int>& vFences) {
+        int lonHFences = size(hFences);
+        int lonVFences = size(vFences);
+        //Copia el vector
+        hFences.insert(std::end(hFences),1,m);
+        vFences.insert(std::end(vFences),1,n);
+        std::sort(hFences.begin(),hFences.end());
+        std::sort(vFences.begin(),vFences.end());
+        std::vector<int> l_h_square;
+        std::vector<int> l_v_square;
+        std::vector<int> aux_hFences(hFences.begin(),hFences.end());
+        std::vector<int> aux_vFences(vFences.begin(),vFences.end());
+        for (const auto& elemento : hFences)
+            {
+                
+            }
+        return -1;
+    }
+};
+```
